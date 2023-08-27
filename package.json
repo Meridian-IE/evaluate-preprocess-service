@@ -1,6 +1,7 @@
 {
   "type": "module",
   "dependencies": {
+    "@zondax/filecoin-signing-tools": "^2.4.2",
     "ethers": "^5.7.2"
   }
 }
