@@ -2,6 +2,7 @@ import { ethers } from 'ethers'
 import fs from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
 import { preprocess } from './lib/preprocess.js'
+import { evaluate } from './lib/evaluate.js'
 
 const {
   RPC_URL = 'https://api.calibration.node.glif.io/rpc/v0',
@@ -28,8 +29,20 @@ const db = {
 // Listen for events
 ieContract.on('MeasurementAdded', (cid, _roundIndex) => {
   const roundIndex = Number(_roundIndex)
-  console.log('Event: MeasurementAdded', { cid, roundIndex })
+  console.log('Event: MeasurementAdded', { roundIndex })
 
   // Preprocess
-  preprocess(db, cid, roundIndex).catch(console.error)
+  preprocess({ db, cid, roundIndex }).catch(console.error)
+})
+
+ieContract.on('RoundStart', _roundIndex => {
+  const roundIndex = Number(_roundIndex)
+  console.log('Event: RoundStart', { roundIndex })
+
+  // Evaluate previous round
+  evaluate({
+    db,
+    ieContract,
+    roundIndex: roundIndex - 1
+  }).catch(console.error)
 })
