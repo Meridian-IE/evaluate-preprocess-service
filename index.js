@@ -4,7 +4,7 @@ import { evaluate } from './lib/evaluate.js'
 import { ieContract } from './lib/contract.js'
 
 const db = {
-  aggregates: [],
+  measurements: {},
   cidsSeen: [],
   roundsSeen: []
 }
