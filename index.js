@@ -1,4 +1,3 @@
-
 import { preprocess } from './lib/preprocess.js'
 import { evaluate } from './lib/evaluate.js'
 import { ieContract } from './lib/contract.js'
